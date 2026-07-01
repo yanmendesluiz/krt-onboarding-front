@@ -76,7 +76,7 @@ src/app
 
 ## Observação sobre Node 16 e Angular 11
 
-O projeto foi montado com as versões solicitadas. Caso ocorra algum problema de compatibilidade de dependências antigas, rode:
+Caso ocorra algum problema de compatibilidade de dependências antigas, rode:
 
 ```bash
 npm install --legacy-peer-deps
