@@ -1,0 +1,48 @@
+<section class="page-header">
+  <div>
+    <h2>{{ isEditMode ? 'Editar conta' : 'Nova conta' }}</h2>
+    <p>{{ isEditMode ? 'Atualize os dados da conta.' : 'Cadastre uma nova conta de cliente.' }}</p>
+  </div>
+
+  <a routerLink="/accounts" class="button secondary">Voltar</a>
+</section>
+
+<div *ngIf="errorMessage" class="alert error">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="loading" class="card">
+  Carregando conta...
+</div>
+
+<form *ngIf="!loading" [formGroup]="form" class="card" (ngSubmit)="save()">
+  <div class="form-group">
+    <label for="holderName">Nome do titular</label>
+    <input id="holderName" type="text" formControlName="holderName" placeholder="Ex.: Yan Mendes" />
+    <small *ngIf="hasError('holderName', 'required')">Nome do titular é obrigatório.</small>
+    <small *ngIf="hasError('holderName', 'maxlength')">Nome deve ter no máximo 150 caracteres.</small>
+  </div>
+
+  <div class="form-group">
+    <label for="cpf">CPF</label>
+    <input id="cpf" type="text" formControlName="cpf" placeholder="Somente números" maxlength="11" />
+    <small *ngIf="hasError('cpf', 'required')">CPF é obrigatório.</small>
+    <small *ngIf="hasError('cpf', 'pattern')">CPF deve conter exatamente 11 números.</small>
+  </div>
+
+  <div class="form-group">
+    <label for="status">Status</label>
+    <select id="status" formControlName="status">
+      <option *ngFor="let status of statuses" [ngValue]="status.value">
+        {{ status.description }}
+      </option>
+    </select>
+  </div>
+
+  <div class="actions">
+    <button type="submit" class="button primary" [disabled]="saving">
+      {{ saving ? 'Salvando...' : 'Salvar' }}
+    </button>
+    <a routerLink="/accounts" class="button secondary">Cancelar</a>
+  </div>
+</form>

@@ -1,0 +1,53 @@
+<section class="page-header">
+  <div>
+    <h2>Contas</h2>
+    <p>Consulte, edite e exclua contas de clientes.</p>
+  </div>
+
+  <a routerLink="/accounts/new" class="button primary">Nova conta</a>
+</section>
+
+<div *ngIf="loading" class="card">
+  Carregando contas...
+</div>
+
+<div *ngIf="!loading && accounts.length === 0" class="card empty-state">
+  Nenhuma conta cadastrada.
+</div>
+
+<div *ngIf="!loading && accounts.length > 0" class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Nome do titular</th>
+        <th>CPF</th>
+        <th>Status</th>
+        <th class="actions-column">Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let account of accounts">
+        <td>{{ account.holderName }}</td>
+        <td>{{ account.cpf }}</td>
+        <td>
+          <span class="status" [class.inactive]="account.status !== 1">
+            {{ getStatusDescription(account.status) }}
+          </span>
+        </td>
+        <td class="actions">
+          <a [routerLink]="['/accounts', account.id, 'edit']" class="button secondary">
+            Editar
+          </a>
+
+          <button
+            type="button"
+            class="button danger"
+            (click)="deleteAccount(account)">
+            Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
